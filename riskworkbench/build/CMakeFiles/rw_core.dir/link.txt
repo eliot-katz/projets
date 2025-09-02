@@ -1,0 +1,2 @@
+/usr/bin/ar qc librw_core.a CMakeFiles/rw_core.dir/src/core/normal_rng.cpp.o CMakeFiles/rw_core.dir/src/core/stats.cpp.o CMakeFiles/rw_core.dir/src/models/gbm.cpp.o CMakeFiles/rw_core.dir/src/pricing/analytic_bs.cpp.o CMakeFiles/rw_core.dir/src/pricing/mc_pricer.cpp.o
+/usr/bin/ranlib librw_core.a

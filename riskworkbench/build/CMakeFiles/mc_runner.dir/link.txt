@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/mc_runner.dir/app/cli/mc_runner/main.cpp.o -o bin/mc_runner  librw_core.a 

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/bs_ref.dir/app/cli/bs_ref/main.cpp.o -o bin/bs_ref  librw_core.a 

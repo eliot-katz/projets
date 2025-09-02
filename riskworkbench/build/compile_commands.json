@@ -1,0 +1,37 @@
+[
+{
+  "directory": "/home/eliot/ENSIIE/projets/riskworkbench/build",
+  "command": "/usr/bin/c++  -I/home/eliot/ENSIIE/projets/riskworkbench/include -O3 -DNDEBUG -Wall -Wextra -Wpedantic -o CMakeFiles/rw_core.dir/src/core/normal_rng.cpp.o -c /home/eliot/ENSIIE/projets/riskworkbench/src/core/normal_rng.cpp",
+  "file": "/home/eliot/ENSIIE/projets/riskworkbench/src/core/normal_rng.cpp"
+},
+{
+  "directory": "/home/eliot/ENSIIE/projets/riskworkbench/build",
+  "command": "/usr/bin/c++  -I/home/eliot/ENSIIE/projets/riskworkbench/include -O3 -DNDEBUG -Wall -Wextra -Wpedantic -o CMakeFiles/rw_core.dir/src/core/stats.cpp.o -c /home/eliot/ENSIIE/projets/riskworkbench/src/core/stats.cpp",
+  "file": "/home/eliot/ENSIIE/projets/riskworkbench/src/core/stats.cpp"
+},
+{
+  "directory": "/home/eliot/ENSIIE/projets/riskworkbench/build",
+  "command": "/usr/bin/c++  -I/home/eliot/ENSIIE/projets/riskworkbench/include -O3 -DNDEBUG -Wall -Wextra -Wpedantic -o CMakeFiles/rw_core.dir/src/models/gbm.cpp.o -c /home/eliot/ENSIIE/projets/riskworkbench/src/models/gbm.cpp",
+  "file": "/home/eliot/ENSIIE/projets/riskworkbench/src/models/gbm.cpp"
+},
+{
+  "directory": "/home/eliot/ENSIIE/projets/riskworkbench/build",
+  "command": "/usr/bin/c++  -I/home/eliot/ENSIIE/projets/riskworkbench/include -O3 -DNDEBUG -Wall -Wextra -Wpedantic -o CMakeFiles/rw_core.dir/src/pricing/analytic_bs.cpp.o -c /home/eliot/ENSIIE/projets/riskworkbench/src/pricing/analytic_bs.cpp",
+  "file": "/home/eliot/ENSIIE/projets/riskworkbench/src/pricing/analytic_bs.cpp"
+},
+{
+  "directory": "/home/eliot/ENSIIE/projets/riskworkbench/build",
+  "command": "/usr/bin/c++  -I/home/eliot/ENSIIE/projets/riskworkbench/include -O3 -DNDEBUG -Wall -Wextra -Wpedantic -o CMakeFiles/rw_core.dir/src/pricing/mc_pricer.cpp.o -c /home/eliot/ENSIIE/projets/riskworkbench/src/pricing/mc_pricer.cpp",
+  "file": "/home/eliot/ENSIIE/projets/riskworkbench/src/pricing/mc_pricer.cpp"
+},
+{
+  "directory": "/home/eliot/ENSIIE/projets/riskworkbench/build",
+  "command": "/usr/bin/c++  -I/home/eliot/ENSIIE/projets/riskworkbench/include -O3 -DNDEBUG -o CMakeFiles/bs_ref.dir/app/cli/bs_ref/main.cpp.o -c /home/eliot/ENSIIE/projets/riskworkbench/app/cli/bs_ref/main.cpp",
+  "file": "/home/eliot/ENSIIE/projets/riskworkbench/app/cli/bs_ref/main.cpp"
+},
+{
+  "directory": "/home/eliot/ENSIIE/projets/riskworkbench/build",
+  "command": "/usr/bin/c++  -I/home/eliot/ENSIIE/projets/riskworkbench/include -O3 -DNDEBUG -o CMakeFiles/mc_runner.dir/app/cli/mc_runner/main.cpp.o -c /home/eliot/ENSIIE/projets/riskworkbench/app/cli/mc_runner/main.cpp",
+  "file": "/home/eliot/ENSIIE/projets/riskworkbench/app/cli/mc_runner/main.cpp"
+}
+]

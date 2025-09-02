@@ -1,0 +1,186 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{float}
+\usepackage{pgfplotstable}
+\usepackage[final]{microtype}
+
+\pgfplotsset{compat=1.18}
+\pgfplotsset{
+  every axis/.append style={
+    tick label style={/pgf/number format/fixed,/pgf/number format/precision=4},
+    grid=both
+  }
+}
+
+\usepackage{siunitx}
+\usetikzlibrary{arrows.meta, positioning}
+
+\title{Phase 1 -- Validation d'un moteur de pricing Monte Carlo}
+\author{Projet \texttt{RiskWorkbench} - Eliot KATZENMAYER}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Cette première phase avait pour objectif d’établir un socle robuste pour le pricing d’options vanilles européennes sous hypothèse du modèle de Black--Scholes. Deux volets étaient poursuivis : d’une part, la mise en œuvre des formules fermées analytiques comme référence de validation ; d’autre part, le développement d’un moteur Monte Carlo générique permettant de simuler les dynamiques de prix sous mesure risque-neutre. L’exigence principale était de garantir à la fois la justesse numérique et la stabilité statistique des estimateurs.
+
+\section{Architecture logicielle}
+L’implémentation a été structurée en modules spécialisés, de manière à séparer clairement les responsabilités :
+\begin{itemize}
+  \item \textbf{Générateur aléatoire normal standard} : encapsule la graine et fournit des tirages $Z \sim \mathcal{N}(0,1)$ reproductibles.
+  \item \textbf{Accumulateur statistique} : basé sur l’algorithme de Welford, permet de calculer en ligne la moyenne, la variance et les intervalles de confiance.
+  \item \textbf{Modèle de marché (GBM)} : implémente la dynamique $dS_t/S_t = (r-q)\,dt + \sigma\,dW_t$ sous mesure $Q$, avec simulation exacte et multipas.
+  \item \textbf{Payoffs vanilles} : fonctions \emph{call} et \emph{put} européens.
+  \item \textbf{Orchestrateur Monte Carlo} : simule les trajectoires, applique les payoffs, actualise et calcule les statistiques.
+\end{itemize}
+
+\bigskip
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm, >=Stealth, every node/.style={font=\small, align=center}]
+  % Nodes
+  \node[draw, rounded corners, fill=blue!10, minimum width=3.2cm, minimum height=1cm] (rng) {Générateur aléatoire\\Normal $N(0,1)$};
+  \node[draw, rounded corners, fill=green!10, minimum width=3.2cm, minimum height=1cm, right=of rng] (gbm) {Modèle GBM\\$S_T = S_0 e^{(\cdots)}$};
+  \node[draw, rounded corners, fill=orange!10, minimum width=3.2cm, minimum height=1cm, right=of gbm] (payoff) {Payoff\\Call / Put};
+  \node[draw, rounded corners, fill=red!10, minimum width=3.2cm, minimum height=1cm, below=of gbm] (mc) {Monte Carlo Pricer};
+  \node[draw, rounded corners, fill=gray!10, minimum width=3.2cm, minimum height=1cm, below=of payoff] (stats) {Statistiques \& IC};
+
+  % Arrows
+  \draw[->] (rng) -- (gbm);
+  \draw[->] (gbm) -- (payoff);
+  \draw[->] (payoff.south) |- (mc.north);
+  \draw[->] (gbm.south) |- (mc.north);
+  \draw[->] (rng.south) |- (mc.north);
+  \draw[->] (mc) -- (stats);
+\end{tikzpicture}
+\caption{Architecture logicielle du pricer Monte Carlo en Phase~1}
+\label{fig:archi_mc}
+\end{figure}
+
+
+\bigskip
+
+\section{Méthodologie de validation}
+La validation s’est appuyée sur un ensemble de micro-expériences systématiques :
+\begin{enumerate}
+  \item \textbf{Convergence en $N$} : on a évalué la demi-largeur de l’intervalle de confiance $95\%$ en fonction du nombre de trajectoires simulées. La relation attendue $O(1/\sqrt{N})$ a été vérifiée empiriquement.
+  \item \textbf{Invariance au pas} : les prix obtenus avec $n\_steps=1$, $10$ et $50$ se sont révélés statistiquement équivalents, confirmant la cohérence entre schéma exact et multipas.
+  \item \textbf{Cas de référence} : pour différents scénarios (ITM/OTM, maturité courte/longue), le prix théorique de Black--Scholes a toujours été contenu dans l’intervalle de confiance Monte Carlo.
+  \item \textbf{Suivi de convergence} : l’analyse des journaux de convergence a montré la stabilité de la quantité $c = \text{half\_width} \times \sqrt{N}$, signature caractéristique d’une simulation Monte Carlo non-biaisée.
+\end{enumerate}
+
+\subsection*{Conditions expérimentales.}
+Les expériences ont été réalisées avec le compilateur \texttt{g++} (standard C++17), 
+en mode optimisation \texttt{-O3}, sur un processeur Intel Core i5-12500H. 
+Les simulations ont été exécutées via l’exécutable \texttt{mc\_runner}, 
+avec une graine initiale fixée à $42$, un schéma exact à un seul pas ($n_{\text{steps}}=1$), 
+et des lots de $10^5$ trajectoires. 
+Sauf mention contraire, les temps rapportés correspondent à la moyenne de $k$ exécutions indépendantes.
+
+
+\subsection*{Modèle et estimateur.}
+Sous $Q$ : 
+\begin{itemize}
+    \item \( \frac{dS_t}{S_t}=(r-q)\,dt+\sigma\,dW_t\),
+    \item \(\quad S_T=S_0\exp\!\big((r-q-\tfrac12\sigma^2)T+\sigma\sqrt{T}\,Z\big) \),
+    \item \(~Z\sim\mathcal N(0,1).\)
+\end{itemize}
+
+Le prix MC : \(\hat P_N=e^{-rT}\tfrac1N\sum_{i=1}^N \text{payoff}(S_T^{(i)})\), \\
+avec erreur-type \(\mathrm{SE}=\hat\sigma/\sqrt{N}\) et IC95\% \([\hat P\pm 1.96\,\mathrm{SE}]\).
+
+
+\section{Résultats et discussion}
+Les résultats numériques montrent que :
+\begin{itemize}
+  \item les estimateurs Monte Carlo sont non-biaisés et reproduisent fidèlement les formules analytiques de Black--Scholes ;
+  \item la convergence suit la loi théorique en $1/\sqrt{N}$ avec une constante $c \approx 27.1$ ;
+  \item la robustesse est assurée même dans des configurations extrêmes (deep ITM/OTM, taux négatifs) ;
+  \item l’efficacité est satisfaisante, avec environ un million de trajectoires simulées en moins de $50$ ms en mode optimisé.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.9\linewidth,
+  ylabel={Demi-largeur de l'IC (95\%)},
+  xlabel={$1/\sqrt{N}$},
+  grid=both,
+  enlargelimits=0.05,
+  legend style={at={(0.02,0.98)}, anchor=north west, draw=none, fill=none},
+  ticklabel style={/pgf/number format/fixed},
+]
+% Données : N, half_width
+\pgfplotstableread{
+N        half
+50000    0.121094
+100000   0.086112
+200000   0.060784
+500000   0.038377
+1000000  0.027103
+}\datatable
+
+% Nuage : half_width vs 1/sqrt(N)
+\addplot+[only marks, mark=*] table[
+  x expr={1/sqrt(\thisrow{N})},
+  y=half
+]{\datatable};
+\addlegendentry{Données (mesurées)}
+
+% Ajustement linéaire à l'oeil (optionnel) : droite passant par l'origine avec pente k~c_avg
+% Ici on trace y = k * x, k ≈ 27.1319 (ton c_avg)
+\addplot+[domain=0:0.0047, samples=2, no marks] {27.1319 * x};
+\addlegendentry{Réf.\ $y = 27.13 \cdot (1/\sqrt{N})$}
+\end{axis}
+\end{tikzpicture}
+\caption{Relation linéaire attendue entre la demi-largeur d'IC (95\%) et $1/\sqrt{N}$.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.9\linewidth,
+  xmode=log, ymode=log,
+  xlabel={$N$ (trajectoires)},
+  ylabel={Demi-largeur de l'IC (95\%)},
+  grid=both,
+  legend style={at={(0.02,0.98)}, anchor=north west, draw=none, fill=none},
+  ticklabel style={/pgf/number format/fixed},
+]
+% Données : N, half_width
+\pgfplotstableread{
+N        half
+50000    0.121094
+100000   0.086112
+200000   0.060784
+500000   0.038377
+1000000  0.027103
+}\datatable
+
+% Points mesurés
+\addplot+[only marks, mark=*] table[x=N, y=half]{\datatable};
+\addlegendentry{Données (mesurées)}
+
+% Droite de référence : y = k / sqrt(N) avec k = c_avg ≈ 27.1319
+\addplot+[no marks, domain=50000:1000000, samples=200] {27.1319 / sqrt(x)};
+\addlegendentry{Réf.\ $y = 27.13/\sqrt{N}$}
+
+\end{axis}
+\end{tikzpicture}
+\caption{Décroissance en $N^{-1/2}$ de la demi-largeur de l'IC (95\%) en échelle log--log.}
+\end{figure}
+
+
+\section{Conclusion}
+La Phase~1 a permis d’atteindre l’ensemble des objectifs fixés : mise en place d’une architecture modulaire, validation numérique rigoureuse, et obtention de performances suffisantes pour des expériences sur plusieurs millions de trajectoires. Ce socle valide ouvre la voie à la Phase~2, qui portera sur l’intégration de techniques de réduction de variance et sur l’estimation des sensibilités (\emph{Greeks}).
+\end{document}
