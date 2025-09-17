@@ -1,0 +1,80 @@
+{
+    "greeks": {
+        "config": {
+            "bump_abs_T": 0.002739,
+            "bump_abs_r": 0.0001,
+            "bump_abs_sigma": 0.01,
+            "bump_rel_S0": 0.0001,
+            "method": "brv",
+            "n_steps": 1,
+            "use_antithetic": false,
+            "use_crn": true
+        },
+        "result": {
+            "delta": 0.844392,
+            "gamma": 0.119339,
+            "rho": 82.290333,
+            "theta": -1.886651,
+            "vega": 22.178323
+        }
+    },
+    "instrument": {
+        "K": 100,
+        "T": 1,
+        "type": "call"
+    },
+    "market": {
+        "S0": 100,
+        "q": 0,
+        "r": 0.02,
+        "sigma": 0.02
+    },
+    "mc": {
+        "batch_size": 100000,
+        "n_paths_target": 400000,
+        "n_steps": 1,
+        "seed": 42,
+        "tolerance": -1,
+        "use_antithetic": false,
+        "use_crn": true
+    },
+    "stress": {
+        "baseline": {
+            "instrument": {
+                "K": 100,
+                "T": 1,
+                "type": "call"
+            },
+            "market": {
+                "S0": 100,
+                "q": 0,
+                "r": 0.02
+            },
+            "sigma": 0.02
+        },
+        "config": {
+            "dR_bps": -61,
+            "dS_pct": 9.42,
+            "dSigma": 0.043,
+            "dT_days": 111,
+            "derived": {
+                "dR_abs": -0.0061,
+                "dS_rel": 0.0942,
+                "dT_years": 0.3041095890410959
+            },
+            "n_steps": 1,
+            "seed": 42,
+            "use_crn": true
+        },
+        "result": {
+            "elapsed_ms": 22,
+            "pnl_error": -4.400415,
+            "pnl_mc": 9.300311,
+            "pnl_taylor": 13.700726,
+            "stressed_px": 11.44919
+        }
+    },
+    "ui": {
+        "last_tab": "Stress"
+    }
+}
