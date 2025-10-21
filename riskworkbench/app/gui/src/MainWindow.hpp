@@ -4,6 +4,7 @@
 #include <memory>
 #include <optional>
 #include <cstddef>
+#include <vector>
 
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QScatterSeries>
@@ -23,6 +24,10 @@
 
 #include <rw/market/market_data.hpp>
 #include <rw/market/instrument.hpp>
+#include <rw/calibration/calib.hpp>
+#include <rw/market/surface.hpp>  
+#include <rw/smile/smile.hpp>     
+#include <rw/qc/qc.hpp> 
 
 
 QT_BEGIN_NAMESPACE
@@ -30,6 +35,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 namespace gui { class McWorker; }
+namespace gui { class CalibWorker; }
 
 namespace QtCharts {
   class QChartView;
@@ -38,6 +44,12 @@ namespace QtCharts {
   class QAreaSeries;
   class QValueAxis;
 }
+
+class QTableWidget;
+class QProgressBar;
+class QComboBox;
+class QLabel;
+class QPushButton;
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -67,6 +79,33 @@ private slots:
 
   void onShortcutSave();    // Ctrl+S
   void onShortcutSaveAs();  // Ctrl+Shift+S
+
+  // --- Calibration UI ---
+  // actions UI
+  void onCalibOpenCsv();
+  void onCalibInvertIv();
+  void onCalibBuildSmile();
+  void onCalibFitGlobal();
+  void onCalibRunQc();
+  void onCalibExportCsv();
+  void onCalibSaveProject();
+  void onCalibSelectT(int idx);
+
+  // retours worker
+  void onCalibMessage(const QString& m);
+  void onCalibProgress(const QString& stage, int cur, int tot);
+  void onCalibLoaded(size_t nRows, double S0, double r, double q, const QString& und);
+  void onCalibInverted(size_t priced, size_t ok, size_t bad);
+  void onCalibSmileBuilt(const QVector<double>& maturities);
+  void onCalibGlobalFitted(const rw::calib::CalibReport& rep, double sigma);
+  void onCalibQcDone(double rmse_price, double rmse_iv, size_t n,
+                   const std::vector<rw::qc::ErrorRow>& rows);
+
+  void onCalibExported(const QString& path);
+  void onCalibProjectSaved(const QString& path);
+  void onCalibFailed(const QString& why);
+
+  void onExportChartsPng();
 
 
 private:
@@ -201,6 +240,70 @@ private:
   static double slopeLeastSquares(const std::vector<double>& x, const std::vector<double>& y);
   static double sampleVariance(const std::vector<double>& x, bool unbiased = true);
 
+  /////////////  Calibration   /////////////
+  void setupCalibrationTab_();
+  void wireCalibration_();
+  void repaintSmile_();
+  void repaintResiduals_();
+  void repaintHeatmap_();
 
+  // ===== Calibration charts =====
+  QtCharts::QChartView*  chartCalibSmile_{nullptr};
+  QtCharts::QChart*      smileChart_{nullptr};
+  QtCharts::QLineSeries* smileLine_{nullptr};
+  QtCharts::QScatterSeries* smileNodes_{nullptr};
+
+  QtCharts::QChartView*  chartCalibResid_{nullptr};
+  QtCharts::QChart*      residChart_{nullptr};
+  QtCharts::QBarSeries*  residBars_{nullptr};
+
+  // Smile
+  QtCharts::QValueAxis* axSmileX_{nullptr};
+  QtCharts::QValueAxis* axSmileY_{nullptr};
+
+  // Résidus
+  QtCharts::QBarCategoryAxis* axResidX_{nullptr};
+  QtCharts::QValueAxis*       axResidY_{nullptr};
+
+
+  // helpers
+  QtCharts::QChartView* createChartInPlaceholder(QWidget* ph, QtCharts::QChart* chart);
+  void setupCalibrationCharts_();
+  void updateSmileChartForT_(double T);                         // lit msCalibCache_/smileCalibCache_
+  void updateResidChart_(const std::vector<double>& residuals); // valeurs ΔP (price_mkt - price_fit)
+
+
+  // worker
+  QThread* calibThread_{nullptr};
+  gui::CalibWorker* calib_{nullptr};
+
+  // caches
+  rw::market::MarketSurface msCalibCache_;
+  rw::smile::SmileSurface   smileCalibCache_;
+  std::vector<rw::qc::ErrorRow> residCalibCache_;
+  QVector<double> maturitiesCalib_;
+
+  // --- Calibration: progress/ETA ---
+  enum class CalibProgState { Idle, Busy, Done, Error };
+
+  QElapsedTimer calibEtaTimer_;
+  CalibProgState calibProgState_{CalibProgState::Idle};
+
+  void setCalibProgressStyle_(CalibProgState st);
+  void startCalibStage_(const QString& label, int total);     // reset timer + rouge
+  void updateCalibStage_(int cur, int total);                  // met % + ETA
+  void finishCalibStage_(bool ok=true, const QString& label="");
+  static QString fmtEta_(double seconds);                      // "3.2s", "1m05"
+
+  void showFileToast_(const QString& label, const QString& path);
+  void applySmileSettingsToWorker_();
+
+  static QJsonObject nodeToJson(double K, double iv);
+  QJsonArray serializeSmileSlices_() const; 
+
+  static bool saveWidgetPng(QWidget* w,
+                            const QString& outPath,
+                            const QSize& targetPx = QSize(),
+                            qreal devicePixelRatio = 2.0);
   
 };

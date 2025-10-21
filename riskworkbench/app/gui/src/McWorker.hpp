@@ -3,6 +3,7 @@
 #include <atomic>
 #include <cstddef>
 #include <QString>
+#include <memory>
 
 // RW types (on passe par valeur ⇒ on inclut ici)
 #include <rw/market/market_data.hpp>
@@ -10,6 +11,9 @@
 #include <rw/models/gbm.hpp>
 #include <rw/config/mc_config.hpp>
 #include <rw/config/greeks_config.hpp>
+#include <rw/smile/smile.hpp>
+
+
 
 namespace gui {
 
@@ -46,6 +50,11 @@ public slots:
 
   // Demande d’arrêt asynchrone
   void requestStop();
+  // ===== Configuration Smile pour le pricing =====
+  void setSmileMode(bool enabled);
+  void setSmileSurface(std::shared_ptr<const rw::smile::SmileSurface> s);
+  // vegaStress en POURCENT (ex: +10 => +10%)
+  void setVegaStressPct(double pct);
 
 signals:
   void progress(std::size_t nDone, double mean, double halfwidth95);
@@ -62,6 +71,16 @@ signals:
 
 private:
   std::atomic<bool> stop_{false};
+  // ===== état Smile =====
+  std::shared_ptr<const rw::smile::SmileSurface> smileSurf_;
+  bool   smileEnabled_{false};
+  double vegaStressPct_{0.0}; // % (ex: 10 => +10%)
+
+  // renvoie la sigma à utiliser (fallback = sigma global passé aux slots run*)
+  double effectiveSigma_(const rw::market::MarketData& mkt,
+                       const rw::market::Instrument& inst,
+                       double sigmaFallback,
+                       bool applyVega) const;
 };
 
 } // namespace gui

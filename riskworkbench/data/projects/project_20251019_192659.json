@@ -1,0 +1,69 @@
+{
+    "greeks": {
+        "config": {
+            "bump_abs_T": 0.002739,
+            "bump_abs_r": 0.0001,
+            "bump_abs_sigma": 0.01,
+            "bump_rel_S0": 0.0001,
+            "method": "brv",
+            "n_steps": 1,
+            "use_antithetic": false,
+            "use_crn": true
+        },
+        "result": {
+            "delta": 0,
+            "gamma": 0,
+            "rho": 0,
+            "theta": 0,
+            "vega": 0
+        }
+    },
+    "instrument": {
+        "K": 5000,
+        "T": 0.5,
+        "type": "call"
+    },
+    "market": {
+        "S0": 5000,
+        "q": 0.01,
+        "r": 0.02,
+        "sigma": 0.2
+    },
+    "mc": {
+        "batch_size": 50000,
+        "n_paths_target": 200000,
+        "n_steps": 1,
+        "seed": 42,
+        "tolerance": -1,
+        "use_antithetic": false,
+        "use_crn": true
+    },
+    "stress": {
+        "baseline": {
+        },
+        "config": {
+            "dR_bps": 0,
+            "dS_pct": 0,
+            "dSigma": 0,
+            "dT_days": 0,
+            "derived": {
+                "dR_abs": 0,
+                "dS_rel": 0,
+                "dT_years": 0
+            },
+            "n_steps": 1,
+            "seed": 42,
+            "use_crn": true
+        },
+        "result": {
+            "elapsed_ms": 0,
+            "pnl_error": 0,
+            "pnl_mc": 0,
+            "pnl_taylor": 0,
+            "stressed_px": 0
+        }
+    },
+    "ui": {
+        "last_tab": "Pricing"
+    }
+}

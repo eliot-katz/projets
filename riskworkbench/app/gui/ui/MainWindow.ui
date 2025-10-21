@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>915</width>
-    <height>593</height>
+    <width>1042</width>
+    <height>647</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,119 +48,24 @@
           <property name="verticalSpacing">
            <number>100</number>
           </property>
-          <item row="2" column="1">
-           <widget class="QGroupBox" name="groupBox_2">
-            <property name="title">
-             <string>Instrument</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <layout class="QGridLayout" name="gridLayout_2">
-               <item row="0" column="1">
-                <widget class="QDoubleSpinBox" name="sbK">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="decimals">
-                  <number>6</number>
-                 </property>
-                 <property name="minimum">
-                  <double>0.010000000000000</double>
-                 </property>
-                 <property name="maximum">
-                  <double>1000000000.000000000000000</double>
-                 </property>
-                 <property name="value">
-                  <double>100.000000000000000</double>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>K</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_5">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="layoutDirection">
-                  <enum>Qt::RightToLeft</enum>
-                 </property>
-                 <property name="text">
-                  <string>Type</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_6">
-                 <property name="text">
-                  <string>T</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QDoubleSpinBox" name="sbT">
-                 <property name="maximum">
-                  <double>100.000000000000000</double>
-                 </property>
-                 <property name="singleStep">
-                  <double>0.010000000000000</double>
-                 </property>
-                 <property name="value">
-                  <double>1.000000000000000</double>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <layout class="QHBoxLayout" name="horizontalLayout_2">
-                 <item>
-                  <widget class="QComboBox" name="cbType">
-                   <property name="editable">
-                    <bool>false</bool>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Call</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Put</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="1" column="0">
            <layout class="QGridLayout" name="gridLayout_10">
             <property name="sizeConstraint">
              <enum>QLayout::SetMinimumSize</enum>
             </property>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="btnReset">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Reset</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="1">
              <widget class="QPushButton" name="btnLoadDefaults">
               <property name="sizePolicy">
@@ -197,19 +102,6 @@
               </property>
               <property name="text">
                <string>Load project</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QPushButton" name="btnReset">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Reset</string>
               </property>
              </widget>
             </item>
@@ -318,6 +210,121 @@
               </layout>
              </item>
             </layout>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="title">
+             <string>Instrument</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="1">
+                <widget class="QDoubleSpinBox" name="sbK">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="decimals">
+                  <number>6</number>
+                 </property>
+                 <property name="minimum">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>1000000000.000000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>100.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>K</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_5">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::RightToLeft</enum>
+                 </property>
+                 <property name="text">
+                  <string>Type</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_6">
+                 <property name="text">
+                  <string>T</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QDoubleSpinBox" name="sbT">
+                 <property name="maximum">
+                  <double>100.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.010000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>1.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QComboBox" name="cbType">
+                   <property name="editable">
+                    <bool>false</bool>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Call</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Put</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="btnExportPng">
+            <property name="text">
+             <string>Export Graph</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -971,6 +978,59 @@
                     </property>
                    </widget>
                   </item>
+                  <item row="4" column="1">
+                   <widget class="QSlider" name="slVegaStress">
+                    <property name="sliderPosition">
+                     <number>50</number>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="2">
+                   <widget class="QDoubleSpinBox" name="sbTStress">
+                    <property name="minimum">
+                     <double>-90.000000000000000</double>
+                    </property>
+                    <property name="maximum">
+                     <double>90.000000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="QDoubleSpinBox" name="sbRStress">
+                    <property name="minimum">
+                     <double>-200.000000000000000</double>
+                    </property>
+                    <property name="maximum">
+                     <double>200.000000000000000</double>
+                    </property>
+                    <property name="singleStep">
+                     <double>5.000000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_17">
+                    <property name="text">
+                     <string>Spot (ΔS, %)</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QSlider" name="slTStress">
+                    <property name="minimum">
+                     <number>-90</number>
+                    </property>
+                    <property name="maximum">
+                     <number>90</number>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="1" column="2">
                    <widget class="QDoubleSpinBox" name="sbSigmaStress">
                     <property name="decimals">
@@ -987,16 +1047,20 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="1">
-                   <widget class="QSlider" name="slRStress">
+                  <item row="4" column="2">
+                   <widget class="QDoubleSpinBox" name="sbVegaStress">
                     <property name="minimum">
-                     <number>-100</number>
+                     <double>-50.000000000000000</double>
                     </property>
                     <property name="maximum">
-                     <number>100</number>
+                     <double>50.000000000000000</double>
                     </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_20">
+                    <property name="text">
+                     <string>Maturity (ΔT, days)</string>
                     </property>
                    </widget>
                   </item>
@@ -1004,13 +1068,6 @@
                    <widget class="QLabel" name="label_19">
                     <property name="text">
                      <string>Rate (Δr, bps)</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="label_17">
-                    <property name="text">
-                     <string>Spot (ΔS, %)</string>
                     </property>
                    </widget>
                   </item>
@@ -1024,13 +1081,6 @@
                     </property>
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0">
-                   <widget class="QLabel" name="label_20">
-                    <property name="text">
-                     <string>Maturity (ΔT, days)</string>
                     </property>
                    </widget>
                   </item>
@@ -1053,6 +1103,19 @@
                     </property>
                    </widget>
                   </item>
+                  <item row="2" column="1">
+                   <widget class="QSlider" name="slRStress">
+                    <property name="minimum">
+                     <number>-100</number>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="0" column="1">
                    <widget class="QSlider" name="slS0Stress">
                     <property name="minimum">
@@ -1066,53 +1129,36 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="2">
-                   <widget class="QDoubleSpinBox" name="sbRStress">
-                    <property name="minimum">
-                     <double>-200.000000000000000</double>
-                    </property>
-                    <property name="maximum">
-                     <double>200.000000000000000</double>
-                    </property>
-                    <property name="singleStep">
-                     <double>5.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="2">
-                   <widget class="QDoubleSpinBox" name="sbTStress">
-                    <property name="minimum">
-                     <double>-90.000000000000000</double>
-                    </property>
-                    <property name="maximum">
-                     <double>90.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="1">
-                   <widget class="QSlider" name="slTStress">
-                    <property name="minimum">
-                     <number>-90</number>
-                    </property>
-                    <property name="maximum">
-                     <number>90</number>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="4" column="0">
-                   <widget class="QCheckBox" name="cbStressAutoRun">
+                   <widget class="QLabel" name="lblVegaPct">
                     <property name="text">
-                     <string>AutoRun</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
+                     <string>Vega Stress (%)</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="2">
+                  <item row="6" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_12">
+                    <item>
+                     <widget class="QCheckBox" name="cbStressAutoRun">
+                      <property name="text">
+                       <string>AutoRun</string>
+                      </property>
+                      <property name="checked">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="chkUseSmile">
+                      <property name="text">
+                       <string>Utiliser surface IV 
+ calibrée</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="6" column="2">
                    <widget class="QPushButton" name="btnRunStress">
                     <property name="text">
                      <string>Reprice</string>
@@ -1259,6 +1305,277 @@
              <string extracomment="Logs..."/>
             </property>
            </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabCalibration">
+       <attribute name="title">
+        <string>Calibration</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_11">
+        <item>
+         <layout class="QVBoxLayout" name="vlCalibration" stretch="1,3,0,3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <item>
+             <widget class="QPushButton" name="btnCalibOpen">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Importer CSV…</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnCalibInvert">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Inverser IV</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnCalibSmile">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Construire Smile</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnCalibFitGlobal">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Calibrer σ global</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnCalibRunQc">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>QC</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnCalibExport">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Exporter CSV</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnCalibSaveProject">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Sauver projet</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblCalibTitle">
+              <property name="text">
+               <string>T</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cbCalibT"/>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblCalibMeta">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Aucun fichier</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="calibProgress">
+              <property name="value">
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="tblCalibPreview">
+            <property name="minimumSize">
+             <size>
+              <width>160</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="columnCount">
+             <number>8</number>
+            </property>
+            <column>
+             <property name="text">
+              <string>K</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>T</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>is_call</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>mid_price</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>iv_mid</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>bid</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>ask</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>note</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>5</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="1,1,0">
+            <item>
+             <widget class="QWidget" name="chartCalibSmilePH" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>280</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="chartCalibResidPH" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>280</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblCalibHeatmap">
+              <property name="minimumSize">
+               <size>
+                <width>280</width>
+                <height>280</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
